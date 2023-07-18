@@ -74,7 +74,7 @@ function bump_local_dependents(pkg_to_bump, version) {
 		const pkg_index = requirements.findIndex((line) => {
 			const m = line.trim().match(RE_PKG_NAME);
 			if (!m) return false;
-			return m[0].startsWith(pkg_to_bump);
+			return m[0] === pkg_to_bump;
 		});
 
 		if (pkg_index !== -1) {
