@@ -8,7 +8,7 @@
 	};
 
 	const dispatch = createEventDispatcher<{ select: SelectData }>();
-
+	console.log(value)
 	export let color: string | undefined = undefined;
 	export let selectable: boolean = false;
 </script>
