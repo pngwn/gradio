@@ -2,6 +2,7 @@ const { join } = require("path");
 const { readFileSync, existsSync, writeFileSync, unlinkSync } = require("fs");
 const { getPackagesSync } = require("@manypkg/get-packages");
 
+const RE_PKG_NAME = /^[\w-]+\b/;
 const pkg_meta = getPackagesSync(process.cwd());
 
 const { _handled, ...packages } = JSON.parse(
@@ -13,7 +14,6 @@ const all_packages = pkg_meta.packages.reduce((acc, pkg) => {
 	return acc;
 }, {});
 
-console.log({ all_packages });
 for (const pkg_name in packages) {
 	const { dirs, highlight, feat, fix, current_changelog } = packages[pkg_name];
 
@@ -51,8 +51,6 @@ ${current_changelog}
 		writeFileSync(join(dir, "CHANGELOG.md"), new_changelog);
 	});
 
-	console.log(pkg_name, dirs, version, python);
-
 	if (python) {
 		writeFileSync(join(dirs[0], "version.txt"), version);
 		bump_local_dependents(pkg_name, version);
@@ -60,8 +58,6 @@ ${current_changelog}
 }
 
 unlinkSync(join(pkg_meta.rootDir, ".changeset", "_changelog.json"));
-
-const RE_PKG_NAME = /^[\w-]+\b/;
 
 function bump_local_dependents(pkg_to_bump, version) {
 	for (const pkg_name in all_packages) {
