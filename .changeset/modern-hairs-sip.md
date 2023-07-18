@@ -3,4 +3,4 @@
 "gradio": minor
 ---
 
-fix:Add ability to do a thing
+feat:Add ability to do a thing
