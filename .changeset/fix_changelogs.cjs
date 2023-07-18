@@ -61,6 +61,8 @@ ${current_changelog}
 
 unlinkSync(join(pkg_meta.rootDir, ".changeset", "_changelog.json"));
 
+const RE_PKG_NAME = /^[\w-]+\b/;
+
 function bump_local_dependents(pkg_to_bump, version) {
 	for (const pkg_name in all_packages) {
 		const {
@@ -73,9 +75,11 @@ function bump_local_dependents(pkg_to_bump, version) {
 		const requirements_path = join(dir, "..", "requirements.txt");
 		const requirements = readFileSync(requirements_path, "utf-8").split("\n");
 
-		const pkg_index = requirements.findIndex((line) =>
-			line.startsWith(pkg_to_bump)
-		);
+		const pkg_index = requirements.findIndex((line) => {
+			const m = line.trim().match(RE_PKG_NAME);
+			if (!m) return false;
+			return m[0].startsWith(pkg_to_bump);
+		});
 
 		if (pkg_index !== -1) {
 			requirements[pkg_index] = `${pkg_to_bump}>=${version}`;
