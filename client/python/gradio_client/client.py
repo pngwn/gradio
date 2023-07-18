@@ -52,7 +52,7 @@ class Client:
     The main Client class for the Python client. This class is used to connect to a remote Gradio app and call its API endpoints.
 
     Example:
-        from gradio_client import Client
+        asdasdfrom gradio_client import Client
 
         client = Client("abidlabs/whisper-large-v2")  # connecting to a Hugging Face Space
         client.predict("test.mp4", api_name="/predict")
