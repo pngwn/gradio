@@ -130,7 +130,9 @@ const changelogFunctions = {
 
 		let lines;
 		if (existsSync(join(rootDir, ".changeset", "_changelog.json"))) {
-			lines = JSON.parse(readFileSync("./_changelog.json", "utf-8"));
+			lines = JSON.parse(
+				readFileSync(join(rootDir, ".changeset", "_changelog.json"), "utf-8")
+			);
 		} else {
 			lines = {
 				_handled: []
