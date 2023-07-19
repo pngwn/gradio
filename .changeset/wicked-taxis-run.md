@@ -3,4 +3,4 @@
 "gradio": minor
 ---
 
-feat:Update README.md
+feat:ensure readme is in the appropriate format
