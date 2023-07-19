@@ -156,8 +156,6 @@ const changelogFunctions = {
 					highlight: []
 				};
 
-			console.log(lines[release.name].dirs);
-
 			const changelog_path = join(
 				lines[release.name].dirs[1] || lines[release.name].dirs[0],
 				"CHANGELOG.md"
