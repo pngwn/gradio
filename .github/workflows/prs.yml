@@ -30,6 +30,9 @@ jobs:
           repository: ${{ steps.get-branch.outputs.repo }}
           ref: ${{ steps.get-branch.outputs.branch }}
           fetch-depth: 0
+      - name: test pat
+        run: |
+          echo ${{ secrets.PAT }}
       - name: generate changeset
         uses: "gradio-app/github/actions/generate-changeset@main"
         with:
