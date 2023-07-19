@@ -33,5 +33,5 @@ jobs:
       - name: generate changeset
         uses: "gradio-app/github/actions/generate-changeset@main"
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.PAT }}
           main_pkg: gradio
