@@ -1,7 +1,7 @@
 name: Changesets
 on:
   workflow_run:
-    workflows: ["get-pr"]
+    workflows: ["trigger changeset generation"]
     types:
       - completed
 
@@ -9,8 +9,8 @@ env:
   CI: true
   NODE_OPTIONS: "--max-old-space-size=4096"
 
-# concurrency:
-#   group: ${{ github.event.number || github.event.issue.number }}
+concurrency:
+  group: ${{ github.event.workflow_run.head_repository.full_name }}::${{ github.event.workflow_run.head_branch }}
 
 jobs:
   version:
@@ -18,35 +18,20 @@ jobs:
     name: static checks
     runs-on: ubuntu-22.04
     steps:
-      # - id: 'get-branch'
-      #   uses: "gradio-app/github/actions/get-pr-branch@main"
-      #   with:
-      #     pr: ${{ github.event.number || github.event.issue.number }}
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      # - uses: actions/checkout@v3
-      #   with:
-      #     repository: ${{ steps.get-branch.outputs.repo }}
-      #     ref: ${{ steps.get-branch.outputs.branch }}
-      #     fetch-depth: 0
-      # - name: test pat
-      #   run: |
-      #     echo ${{ secrets.PAT }}
-      # - name: generate changeset
-      #   uses: "gradio-app/github/actions/generate-changeset@main"
-      #   with:
-      #     github_token: ${{ secrets.PAT }}
-      #     main_pkg: gradio
-      - uses: actions/github-script@v6
-        id: set-result
+      - id: 'get-pr'
+        uses: "gradio-app/github/actions/get-pr-branch@main"
         with:
-          script: console.log(JSON.stringify(context, null, 2))
-          result-encoding: string
-      - name: get branch name
-        run: |
-          echo ${{ github.event.workflow_run.head_branch }}
-      - name: get repo name
-        run: |
-          echo ${{ github.event.workflow_run.head_repository.full_name }}
-      - name: get repo owner
-        run: |
-          echo ${{ github.event.workflow_run.head_repository.owner.login }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: get pr number
+        run: echo "PR number is ${{ steps.get-pr.outputs.pr_number }}"
+      - uses: actions/checkout@v3
+        with:
+          repository: ${{ github.event.workflow_run.head_repository.full_name }}
+          ref: ${{ github.event.workflow_run.head_branch }}
+          fetch-depth: 0
+      - name: generate changeset
+        uses: "gradio-app/github/actions/generate-changeset@main"
+        with:
+          github_token: ${{ secrets.PAT }}
+          main_pkg: gradio
+          pr_number: ${{ steps.get-pr.outputs.pr_number }}
