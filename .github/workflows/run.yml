@@ -1,7 +1,7 @@
 name: Changesets
 on:
   workflow_run:
-    workflows: ["get-pr"]
+    workflows: ["trigger changeset generation"]
     types:
       - completed
 
@@ -24,3 +24,14 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: get pr number
         run: echo "PR number is ${{ steps.get-pr.outputs.pr_number }}"
+      - uses: actions/checkout@v3
+        with:
+          repository: ${{ github.event.workflow_run.head_repository.full_name }}
+          ref: ${{ github.event.workflow_run.head_branch }}
+          fetch-depth: 0
+      - name: generate changeset
+        uses: "gradio-app/github/actions/generate-changeset@main"
+        with:
+          github_token: ${{ secrets.PAT }}
+          main_pkg: gradio
+          pr_number: ${{ steps.get-pr.outputs.pr_number }}
