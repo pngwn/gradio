@@ -1,7 +1,7 @@
 const { getPackagesSync } = require("@manypkg/get-packages");
 const gh = require("@changesets/get-github-info");
 const { existsSync, readFileSync, writeFileSync } = require("fs");
-const { join } = require("path");
+const { join, normalize } = require("path");
 
 const { getInfo, getInfoFromPullRequest } = gh;
 const { packages, rootDir } = getPackagesSync(process.cwd());
@@ -9,9 +9,10 @@ const { packages, rootDir } = getPackagesSync(process.cwd());
 function find_packages_dirs(package_name) {
 	const _package = packages.find((p) => p.packageJson.name === package_name);
 	if (!_package) throw new Error(`Package ${package_name} not found`);
-	return [_package.dir, package_name === "gradio" ? rootDir : null].filter(
-		Boolean
-	);
+	return [
+		_package.dir,
+		_package.packageJson.python ? normalize(_package.dir, "..") : null
+	].filter(Boolean);
 }
 
 const changelogFunctions = {
@@ -155,7 +156,10 @@ const changelogFunctions = {
 					highlight: []
 				};
 
-			const changelog_path = join(lines[release.name].dirs[0], "CHANGELOG.md");
+			const changelog_path = join(
+				lines[release.name].dirs[1] || lines[release.name].dirs[0],
+				"CHANGELOG.md"
+			);
 
 			if (existsSync(changelog_path)) {
 				lines[release.name].current_changelog = readFileSync(

@@ -44,12 +44,12 @@ for (const pkg_name in packages) {
 
 ${release_notes}
 
-${current_changelog}
+${current_changelog.replace(`# ${pkg_name}`, "").trim()}
 `.trim();
 
-	dirs.forEach((dir) => {
-		writeFileSync(join(dir, "CHANGELOG.md"), new_changelog);
-	});
+	// dirs.forEach((dir) => {
+	writeFileSync(join(dirs[1] || dirs[0], "CHANGELOG.md"), new_changelog);
+	// });
 
 	if (python) {
 		writeFileSync(join(dirs[0], "version.txt"), version);
