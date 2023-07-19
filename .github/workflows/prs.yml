@@ -1,4 +1,4 @@
-name: Changesets
+name: get-pr
 on:
   pull_request:
     types: [opened, synchronize, reopened, edited, labeled, unlabeled, closed]
@@ -20,21 +20,11 @@ jobs:
     name: static checks
     runs-on: ubuntu-22.04
     steps:
-      - id: 'get-branch'
-        uses: "gradio-app/github/actions/get-pr-branch@main"
-        with:
-          pr: ${{ github.event.number || github.event.issue.number }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/checkout@v3
-        with:
-          repository: ${{ steps.get-branch.outputs.repo }}
-          ref: ${{ steps.get-branch.outputs.branch }}
-          fetch-depth: 0
-      - name: test pat
-        run: |
-          echo ${{ secrets.PAT }}
-      - name: generate changeset
-        uses: "gradio-app/github/actions/generate-changeset@main"
-        with:
-          github_token: ${{ secrets.PAT }}
-          main_pkg: gradio
+      # - uses: actions/checkout@v3
+      # - run: mkdir -p artifact-path
+      # - run: echo ${{ github.event.number || github.event.issue.number }} > artifact-path/pr.txt
+      # - uses: actions/upload-artifact@v3
+      #   with:
+      #     name: pr
+      #     path: echo hello > artifact-path/pr.txt
+      - run: echo "hello"
