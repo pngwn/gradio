@@ -1,7 +1,7 @@
 const { getPackagesSync } = require("@manypkg/get-packages");
 const gh = require("@changesets/get-github-info");
 const { existsSync, readFileSync, writeFileSync } = require("fs");
-const { join, normalize } = require("path");
+const { join } = require("path");
 
 const { getInfo, getInfoFromPullRequest } = gh;
 const { packages, rootDir } = getPackagesSync(process.cwd());
@@ -11,7 +11,7 @@ function find_packages_dirs(package_name) {
 	if (!_package) throw new Error(`Package ${package_name} not found`);
 	return [
 		_package.dir,
-		_package.packageJson.python ? normalize(_package.dir, "..") : null
+		_package.packageJson.python ? join(_package.dir, "..") : null
 	].filter(Boolean);
 }
 
