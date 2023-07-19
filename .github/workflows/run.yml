@@ -41,3 +41,12 @@ jobs:
         with:
           script: console.log(JSON.stringify(context, null, 2))
           result-encoding: string
+      - name: get branch name
+        run: |
+          echo ${{ github.event.workflow_run.head_branch }}
+      - name: get repo name
+        run: |
+          echo ${{ github.event.workflow_run.head_repository.full_name }}
+      - name: get repo owner
+        run: |
+          echo ${{ github.event.workflow_run.head_repository.owner.login }}
