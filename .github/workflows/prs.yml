@@ -21,18 +21,13 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - id: 'get-branch'
-        run: |
-          JSON=$(gh pr view $PR_NO --repo $REPO --json headRepositoryOwner,headRefName,headRepository)
-          echo ::set-output name=owner::$($JSON | jq '.headRepositoryOwner.login')
-          echo ::set-output name=repo::$($JSON | jq '.headRepository.name')
-          echo ::set-output name=branch::$($JSON | jq '.headRefName')
-        env:
-          REPO: ${{ github.repository }}
-          PR_NO: ${{ github.event.number || github.event.issue.number }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: "gradio-app/github/actions/get-pr-branch@main"
+        with:
+          pr: ${{ github.event.number || github.event.issue.number }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v3
         with:
-          repository: ${{ steps.get-branch.outputs.owner }}/${{ steps.get-branch.outputs.repo }}
+          repository: ${{ steps.get-branch.outputs.repo }}
           ref: ${{ steps.get-branch.outputs.branch }}
           fetch-depth: 0
       - name: generate changeset
