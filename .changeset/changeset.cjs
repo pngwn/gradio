@@ -2,7 +2,6 @@ const { getPackagesSync } = require("@manypkg/get-packages");
 const gh = require("@changesets/get-github-info");
 const { existsSync, readFileSync, writeFileSync } = require("fs");
 const { join, normalize } = require("path");
-const { r } = require("msw/lib/glossary-de6278a9");
 
 const { getInfo, getInfoFromPullRequest } = gh;
 const { packages, rootDir } = getPackagesSync(process.cwd());
