@@ -340,10 +340,10 @@ importers:
         specifier: workspace:^0.0.1
         version: link:../atoms
       '@gradio/audio':
-        specifier: workspace:^0.0.1
+        specifier: workspace:^0.0.2
         version: link:../audio
       '@gradio/button':
-        specifier: workspace:^0.0.1
+        specifier: workspace:^0.1.0
         version: link:../button
       '@gradio/chart':
         specifier: workspace:^0.0.1
@@ -370,7 +370,7 @@ importers:
         specifier: workspace:^0.0.1
         version: link:../highlighted-text
       '@gradio/html':
-        specifier: workspace:^0.0.1
+        specifier: workspace:^0.1.0
         version: link:../html
       '@gradio/icons':
         specifier: workspace:^0.0.1
@@ -382,7 +382,7 @@ importers:
         specifier: workspace:^0.0.1
         version: link:../json
       '@gradio/label':
-        specifier: workspace:^0.0.1
+        specifier: workspace:^0.1.0
         version: link:../label
       '@gradio/markdown':
         specifier: workspace:^0.0.1
@@ -394,7 +394,7 @@ importers:
         specifier: workspace:^0.0.1
         version: link:../plot
       '@gradio/table':
-        specifier: workspace:^0.0.1
+        specifier: workspace:^0.1.0
         version: link:../table
       '@gradio/tabs':
         specifier: workspace:^0.0.1
@@ -406,7 +406,7 @@ importers:
         specifier: workspace:^0.0.1
         version: link:../upload
       '@gradio/upload-button':
-        specifier: workspace:^0.0.1
+        specifier: workspace:^0.0.2
         version: link:../upload-button
       '@gradio/utils':
         specifier: workspace:^0.0.1
@@ -448,7 +448,7 @@ importers:
         specifier: workspace:^0.0.1
         version: link:../atoms
       '@gradio/button':
-        specifier: workspace:^0.0.1
+        specifier: workspace:^0.1.0
         version: link:../button
       '@gradio/icons':
         specifier: workspace:^0.0.1
@@ -778,7 +778,7 @@ importers:
   js/table:
     dependencies:
       '@gradio/button':
-        specifier: workspace:^0.0.1
+        specifier: workspace:^0.1.0
         version: link:../button
       '@gradio/upload':
         specifier: workspace:^0.0.1
@@ -820,7 +820,7 @@ importers:
   js/upload-button:
     dependencies:
       '@gradio/button':
-        specifier: workspace:^0.0.1
+        specifier: workspace:^0.1.0
         version: link:../button
       '@gradio/upload':
         specifier: workspace:^0.0.1
