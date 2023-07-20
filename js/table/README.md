@@ -1,3 +1,1 @@
 # `@gradio/table`
-
-boop
